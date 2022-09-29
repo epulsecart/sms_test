@@ -10,6 +10,7 @@ class UserData {
     xUSERNAME = json['X_USER_NAME'];
     xUSERPASS = json['X_USER_PASS'];
     xMOBILEID = json['X_MOBILE_ID'];
+    url = json['url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -17,6 +18,7 @@ class UserData {
     data['X_USER_NAME'] = this.xUSERNAME;
     data['X_USER_PASS'] = this.xUSERPASS;
     data['X_MOBILE_ID'] = this.xMOBILEID;
+    data['url'] = this.url;
     return data;
   }
 }

@@ -34,28 +34,28 @@ InputDecoration primaryInputDecorationTheme(
         width: 0.1,
         color: Colors.grey.shade500,
       ),
-      borderRadius: Sizing.moreBorderRadius,
+      borderRadius: Sizing.standardBorderRadius,
     ),
     focusedBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 0.1,
         color: Theme.of(context).primaryColor,
       ),
-      borderRadius: Sizing.moreBorderRadius,
+      borderRadius: Sizing.standardBorderRadius,
     ),
     errorBorder: OutlineInputBorder(
       borderSide: const BorderSide(
         width: 1,
         color: Colors.redAccent,
       ),
-      borderRadius: Sizing.moreBorderRadius,
+      borderRadius: Sizing.standardBorderRadius,
     ),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(
         width: 0.1,
         color: Colors.grey.shade500,
       ),
-      borderRadius: Sizing.moreBorderRadius,
+      borderRadius: Sizing.standardBorderRadius,
     ),
     alignLabelWithHint: true,
   );

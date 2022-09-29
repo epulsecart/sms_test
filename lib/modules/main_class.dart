@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:smsapp/data/internet_connections/api_settings.dart';
 import 'package:smsapp/data/providers/messages_provider.dart';
 import 'package:smsapp/data/providers/user_provider.dart';
+import 'package:smsapp/generated/l10n.dart';
 import 'package:smsapp/modules/styles/main_theme.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -34,11 +35,13 @@ class _SmsAppState extends State<SmsApp> {
           theme: appThemeData,
           onGenerateRoute: Routes.generateRoute,
           localizationsDelegates: const [
+            S.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate
+            GlobalCupertinoLocalizations.delegate,
           ],
           locale: const Locale.fromSubtags(languageCode: 'ar'),
+          supportedLocales: S.delegate.supportedLocales,
           initialRoute: widget.userExits ? '/' : 'userDataScreen',
           builder: EasyLoading.init(),
         ),

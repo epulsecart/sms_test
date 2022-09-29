@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Sizing {
   static double getHeight(BuildContext context, double x) {
@@ -24,6 +25,9 @@ class Sizing {
       bottomRight: Radius.circular(8), bottomLeft: Radius.circular(8));
   static BorderRadius onlyTopBorderRadius = const BorderRadius.only(
       topRight: Radius.circular(8), topLeft: Radius.circular(8));
-  static BorderRadius moreBorderRadius = BorderRadius.circular(15);
+  static BorderRadius moreBorderRadius = BorderRadius.only(
+      bottomLeft: Radius.circular(15),
+      topLeft: Radius.circular(15),
+      bottomRight: Radius.circular(15));
   static EdgeInsets standaedEleMargine = EdgeInsets.all(10);
 }

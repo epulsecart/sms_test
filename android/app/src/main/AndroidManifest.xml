@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.smsapp">
+    package="com.epulse.usoftsms">
     <uses-permission android:name="android.permission.SEND_SMS" />
     <queries>
         <intent>
@@ -10,7 +10,7 @@
     </queries>
     <application
         tools:replace="android:label"
-        android:label="smsapp"
+        android:label="USoft SMS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

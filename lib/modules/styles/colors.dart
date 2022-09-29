@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
   // primary color
-  static Color primaryColor = const Color(0xffF60100);
+  static Color primaryColor = const Color(0xff3B5CA3);
   static Color errorColor = Colors.redAccent;
   // secondary color
-  static Color secondaryColor = const Color(0xffBD916D);
+  static Color secondaryColor = const Color(0xffCE4C4C);
   // blue color
   static Color profileColor = const Color(0xffBD916D);
   static Color iconColor = Colors.white;

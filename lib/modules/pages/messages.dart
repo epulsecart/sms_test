@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smsapp/data/providers/messages_provider.dart';
+import 'package:smsapp/modules/styles/colors.dart';
 import 'package:smsapp/modules/styles/sizes.dart';
 
 import '../../helpers/shared_pref.dart';
@@ -13,7 +14,9 @@ class MessagesPage extends StatefulWidget {
 }
 
 class _MessagesPageState extends State<MessagesPage> {
+  final GlobalKey _dismiskey = GlobalKey();
   late List<String> numbers;
+
   @override
   void initState() {
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
@@ -33,28 +36,57 @@ class _MessagesPageState extends State<MessagesPage> {
     return Consumer<MessagesProvider>(
       builder: (BuildContext context, messages, Widget? child) => Scaffold(
           appBar: AppBar(
-            title: Text("الرسائل فيد الإرسال"),
+            title: const Text("الرسائل فيد الإرسال"),
           ),
-          body: messages.recievedData
-              ? ListView.builder(
-                  itemBuilder: (context, index) => Container(
-                    height: Sizing.getHeight(context, 15),
-                    width: Sizing.getWidth(context, 90),
+          body: ListView.builder(
+            itemBuilder: (context, index) => messages.recievedData
+                ? Card(
                     margin: Sizing.standaedEleMargine,
-                    padding: Sizing.standaedEleMargine,
-                    decoration: BoxDecoration(
-                        borderRadius: Sizing.moreBorderRadius,
-                        color: Colors.grey),
-                    child: Text(
-                      messages.messagesData[index][messages.numbers[index]][2]
-                          .toString(),
-                      style: const TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: Sizing.getHeight(context, 5),
+                          width: Sizing.getWidth(context, 90),
+                          margin: Sizing.standaedEleMargine,
+                          padding: Sizing.standaedEleMargine,
+                          decoration: const BoxDecoration(
+                              //    gradient: AppColors.masterPageGradient
+                              ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text("الى"),
+                              Text(
+                                messages.messagesData[index]
+                                        [messages.numbers[index]][0]
+                                    .toString(),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: Sizing.getHeight(context, 15),
+                          width: Sizing.getWidth(context, 90),
+                          margin: Sizing.standaedEleMargine,
+                          padding: Sizing.standaedEleMargine,
+                          decoration: BoxDecoration(
+                              borderRadius: Sizing.moreBorderRadius,
+                              color: AppColors.barGreenColor),
+                          child: Text(
+                            messages.messagesData[index]
+                                    [messages.numbers[index]][2]
+                                .toString(),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                  itemCount: messages.numbers.length,
-                )
-              : Center()),
+                  )
+                : const Center(),
+            itemCount: messages.numbers.length,
+          )),
     );
   }
 }

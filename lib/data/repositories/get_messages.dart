@@ -22,7 +22,7 @@ class GetMessagesRepo {
       Provider.of<UserProvider>(context, listen: false)
           .saveUserData(UserData.fromJson(user_data));
       Provider.of<MessagesProvider>(context, listen: false)
-          .getMessages(result['decodedData']);
+          .getMessages(result['decodedData'], context);
       SharedPrefHelper.saveBool('exist', true);
     } catch (e) {
       print("in repo there is a problem $e");

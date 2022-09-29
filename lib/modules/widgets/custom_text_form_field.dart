@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smsapp/modules/styles/sizes.dart';
 import '../styles/input_deco.dart';
 
 class CustomTextFormField extends StatelessWidget {
@@ -58,7 +59,8 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
+      margin: Sizing.standaedEleMargine,
+      padding: Sizing.standaedEleMargine,
       child: TextFormField(
           onFieldSubmitted: onFieldSubmitted,
           textInputAction: textInputAction ?? TextInputAction.next,

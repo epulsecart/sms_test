@@ -92,7 +92,7 @@ class HttpConnections {
       print(
           "get from $uri code is ${response.statusCode} response is ${response.body} ");
       if (response.statusCode == 201 || response.statusCode == 200) {
-        List body = json.decode(response.body);
+        final body = json.decode(response.body);
         Map returnData = {"decodedData": body, "encodedData": response.body};
         return returnData;
       } else {
@@ -100,7 +100,7 @@ class HttpConnections {
             "there is a problem getting data from $uri statuc code is ${response.body}");
       }
     } catch (e) {
-      print("get in sub URl $subUrl got an issue $e");
+      print("get in sub URl $urll got an issue $e");
     }
   }
 }
