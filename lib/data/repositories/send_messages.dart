@@ -62,7 +62,7 @@ class SendMessages {
                   urll: url.toString());
 
               SharedPrefHelper.removeKey('numbers');
-              SharedPrefHelper.removeKey(numbers.first.toString());
+              // SharedPrefHelper.removeKey(numbers.first.toString());
               List<String> newNumbers = numbers;
               newNumbers.remove(numbers.first.toString());
               print("real numbrs elements are ${numbers}");

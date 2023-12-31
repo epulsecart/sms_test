@@ -18,7 +18,6 @@ class GetMessagesRepo {
       final result = await HttpConnections.getCall(
           parameters, '/UsoftSMSMobile/Usoft.asmx/USMS_MESSAGES',
           context: context);
-      print("have got this result ${result['decodedData']}");
       Provider.of<UserProvider>(context, listen: false)
           .saveUserData(UserData.fromJson(user_data));
       Provider.of<MessagesProvider>(context, listen: false)
