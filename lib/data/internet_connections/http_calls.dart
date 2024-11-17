@@ -11,7 +11,8 @@ import 'api_settings.dart';
 class HttpConnections {
   static Future postCall(var data, String subUrl) async {
     ApiFunNames apiFunNames = ApiFunNames();
-    var uri = Uri.parse("${apiFunNames.url}$subUrl");
+    var uri = Uri.https(apiFunNames.url, subUrl);
+    // var uri = Uri.parse("${apiFunNames.url}$subUrl");
     String? token = await SharedPrefHelper.getString('token');
     Map<String, String>? header = {"": ""};
     if (token != null) {
@@ -76,7 +77,8 @@ class HttpConnections {
       if (context != null) {
         url = Provider.of<ApiFunNames>(context, listen: false).url;
       }
-      var uri = Uri.http(url, sUrl, subUrl);
+      var uri = Uri.https(url, sUrl, subUrl);
+
       String? token = await SharedPrefHelper.getString('token');
       Map<String, String>? header = {
         'Content-Type': 'application/json',

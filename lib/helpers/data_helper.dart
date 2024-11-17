@@ -5,7 +5,10 @@ class DataHelper {
   static Future sendSms(message, List<String> recipents) async {
     String result = 'SMS Sent!';
     await sendSMS(message: message, recipients: recipents, sendDirect: true)
-        .catchError((error) {});
+        .catchError((error) {
+          print("error $error");
+          return false;
+    });
     if (result == 'SMS Sent!') {
       return true;
     } else {

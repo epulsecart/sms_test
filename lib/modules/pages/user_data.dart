@@ -116,7 +116,7 @@ class _UserDataScreenState extends State<UserDataScreen> {
                           value: value, rules: ['required']);
                     },
                   ),
-                  FilledButton(
+                  FilledButton2(
                     child: Text("حفظ"),
                     onPressed: () {
                       if (_key.currentState!.validate()) {

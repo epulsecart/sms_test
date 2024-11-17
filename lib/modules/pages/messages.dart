@@ -27,8 +27,8 @@ class _MessagesPageState extends State<MessagesPage> {
 
   void getMessages() async {
     numbers = await SharedPrefHelper.getList('numbers');
-    Provider.of<MessagesProvider>(context, listen: false)
-        .getMessagesFromSharedPref(numbers);
+    // Provider.of<MessagesProvider>(context, listen: false)
+    //     .getMessagesFromSharedPref(numbers);
   }
 
   @override
@@ -36,7 +36,7 @@ class _MessagesPageState extends State<MessagesPage> {
     return Consumer<MessagesProvider>(
       builder: (BuildContext context, messages, Widget? child) => Scaffold(
           appBar: AppBar(
-            title: const Text("الرسائل فيد الإرسال"),
+            title:  Text("الرسائل ${messages.recievedData}فيد الإرسال"),
           ),
           body: ListView.builder(
             itemBuilder: (context, index) => messages.recievedData
@@ -57,8 +57,7 @@ class _MessagesPageState extends State<MessagesPage> {
                             children: [
                               const Text("الى"),
                               Text(
-                                messages.messagesData[index]
-                                        [messages.numbers[index]][0]
+                                messages.messagesData[index]['MOBILE_NO']
                                     .toString(),
                               )
                             ],
@@ -73,8 +72,7 @@ class _MessagesPageState extends State<MessagesPage> {
                               borderRadius: Sizing.moreBorderRadius,
                               color: AppColors.barGreenColor),
                           child: Text(
-                            messages.messagesData[index]
-                                    [messages.numbers[index]][2]
+                            messages.messagesData[index]['SHURT_MESSAGE']
                                 .toString(),
                             style: const TextStyle(
                                 color: Colors.white,
@@ -85,7 +83,7 @@ class _MessagesPageState extends State<MessagesPage> {
                     ),
                   )
                 : const Center(),
-            itemCount: messages.numbers.length,
+            itemCount: messages.messagesData.length,
           )),
     );
   }

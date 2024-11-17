@@ -18,11 +18,10 @@ class GetMessagesRepo {
       final result = await HttpConnections.getCall(
           parameters, '/UsoftSMSMobile/Usoft.asmx/USMS_MESSAGES',
           context: context);
-      print("have got this result ${result['decodedData']}");
       Provider.of<UserProvider>(context, listen: false)
           .saveUserData(UserData.fromJson(user_data));
       Provider.of<MessagesProvider>(context, listen: false)
-          .getMessages(result['decodedData'], context);
+          .getMessages(result['decodedData']);
       SharedPrefHelper.saveBool('exist', true);
     } catch (e) {
       print("in repo there is a problem $e");

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:smsapp/data/internet_connections/api_settings.dart';
 import 'package:smsapp/data/models/user_data.dart';
@@ -12,10 +13,11 @@ import 'package:smsapp/helpers/shared_pref.dart';
 import 'package:smsapp/modules/pages/messages.dart';
 import 'package:smsapp/modules/pages/user_data.dart';
 import 'package:smsapp/modules/styles/sizes.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:flutter/services.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:smsapp/modules/widgets/custom_text_form_field.dart';
+import 'package:smsapp/modules/widgets/filled_button.dart';
 
 import '../../helpers/routers.dart';
 
@@ -27,10 +29,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isGranted = false;
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async{
+      isGranted =  await Permission.contacts.request().isGranted;
       getUserData();
+      setState(() {
+
+      });
     });
     controller = PersistentTabController(initialIndex: 1);
     super.initState();
@@ -125,13 +133,15 @@ class _MainScreenState extends State<MainScreen> {
   Timer? timer;
   TextEditingController sendController = TextEditingController();
   TextEditingController receiveController = TextEditingController();
-
+  bool isGranted = false;
   @override
   void initState() {
     receiveController.text = '15';
     sendController.text = '3';
     initPlatformState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) async {
+      isGranted = await Permission.sms.request().isGranted ;
+      if (!isGranted) await Permission.sms.request();
       if (await SharedPrefHelper.checkKey('rec')) {
         String tempRec = await SharedPrefHelper.getString('rec') ?? '15';
         int tempi = int.parse(tempRec);
@@ -192,24 +202,27 @@ class _MainScreenState extends State<MainScreen> {
     if (!mounted) return;
   }
 
-  void _sendSmsEnable(enabled) async {
+  void _sendSmsEnable(enabled, List<String> numbers) async {
     setState(() {
       smsMood = enabled;
     });
     Provider.of<MessagesProvider>(context, listen: false).sendSms = enabled;
     if (enabled) {
       print("will send messages now");
-      SendMessages.sendSmsMessages(
-          context, await SharedPrefHelper.getList('numbers'));
+      // SendMessages.sendSmsMessages(
+      //     context, numbers);
     } else {}
   }
 
-  void _recieveSmsEnable(enabled) {
+  void _recieveSmsEnable(enabled) async{
     setState(() {
       recieveSms = enabled;
     });
     if (enabled) {
-      timer = Timer.periodic(Duration(seconds: x), (timer) {
+
+      timer = Timer.periodic(Duration(seconds: x), (timer) async{
+        List temp = await SharedPrefHelper.getList('numbers');
+        print("temp is now ${temp.length}");
         print("checking for new messages");
         GetMessagesRepo.getMessages(
             context,
@@ -240,11 +253,46 @@ class _MainScreenState extends State<MainScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                isGranted? SizedBox(
+                  width: MediaQuery.of(context).size.width ,
+                  child: const Card(
+                    color: Colors.lightGreen,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(Icons.check),
+                          Text("تم منح صلاحية الارسال"),
+                        ],
+                      ),
+                    ),
+                  ),
+                ):SizedBox(
+                  width: MediaQuery.of(context).size.width ,
+                  child: const Card(
+                    color: Colors.redAccent,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(Icons.cancel_outlined),
+                          Text("يحب منح الصلاحيات لارسال الرسائل"),
+                        ],
+                      ),
+                    ),
+                  ),
+                ) ,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+
                     const Text(" تفعيل وضع الإرسال في الخلفية"),
-                    Switch(value: messages.sendSms, onChanged: _sendSmsEnable),
+                    Switch(value: messages.sendSms, onChanged: (v){
+                      _sendSmsEnable(v , messages.numbers);
+
+                    }),
                   ],
                 ),
                 Row(
@@ -315,7 +363,7 @@ class _MainScreenState extends State<MainScreen> {
                     )
                   ],
                 ),
-                messages.recievedData && smsMood
+                messages.recievedData && smsMood && messages.messagesData.isNotEmpty
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -345,6 +393,7 @@ class _MainScreenState extends State<MainScreen> {
                           ],
                         ),
                       ),
+                // FilledButton2(child: Text(), onPressedessed: onPressed)
               ],
             ),
           ),

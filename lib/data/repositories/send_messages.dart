@@ -12,7 +12,7 @@ import '../internet_connections/http_calls.dart';
 class SendMessages {
   static void sendSmsMessages(
       BuildContext context, List<String> numbers) async {
-    if (await numbers.isEmpty) {
+    if (numbers.isEmpty) {
       return;
     }
     Future.doWhile(() async {
@@ -55,14 +55,14 @@ class SendMessages {
               List tempList =
                   await SharedPrefHelper.getList(numbers.first.toString());
               String tempYearID = tempList[1].toString();
-              final response = await HttpConnections.getCall({
-                'X_SERIAL_ID': numbers.first.toString(),
-                'X_YEAR_ID': tempYearID
-              }, '/UsoftSMSMobile/Usoft.asmx/SET_IS_SEND',
-                  urll: url.toString());
+              // final response = await HttpConnections.getCall({
+              //   'X_SERIAL_ID': numbers.first.toString(),
+              //   'X_YEAR_ID': tempYearID
+              // }, '/UsoftSMSMobile/Usoft.asmx/SET_IS_SEND',
+              //     urll: url.toString());
 
               SharedPrefHelper.removeKey('numbers');
-              SharedPrefHelper.removeKey(numbers.first.toString());
+              // SharedPrefHelper.removeKey(numbers.first.toString());
               List<String> newNumbers = numbers;
               newNumbers.remove(numbers.first.toString());
               print("real numbrs elements are ${numbers}");
@@ -70,8 +70,8 @@ class SendMessages {
               print(
                   "will store ${newNumbers.length} to numbers in shared pref");
               await SharedPrefHelper.saveList('numbers', newNumbers);
-              Provider.of<MessagesProvider>(context, listen: false)
-                  .getMessagesFromSharedPref(newNumbers);
+              // Provider.of<MessagesProvider>(context, listen: false)
+              //     .getMessagesFromSharedPref(newNumbers);
               if (newNumbers.isEmpty) {
                 return false;
               }
@@ -90,5 +90,10 @@ class SendMessages {
       } else
         return false;
     });
+  }
+
+
+  static void sendSmsMessages2(BuildContext context, List<String> numbers)async{
+
   }
 }

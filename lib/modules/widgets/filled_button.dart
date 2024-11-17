@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../styles/sizes.dart';
 
-class FilledButton extends StatelessWidget {
+class FilledButton2 extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
   final Color? borderColor;
@@ -12,7 +12,7 @@ class FilledButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   final VoidCallback onPressed;
   final double? evalo;
-  const FilledButton({
+  const FilledButton2({
     Key? key,
     this.evalo,
     this.borderColor,
@@ -44,7 +44,7 @@ class FilledButton extends StatelessWidget {
         child: DefaultTextStyle(
             style: TextStyle(
               color: Colors.white,
-              fontFamily: Get.textTheme.button?.fontFamily,
+              // fontFamily: Get.textTheme.button?.fontFamily,
               height: 1,
             ),
             child: child),
